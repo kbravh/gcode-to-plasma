@@ -14,7 +14,7 @@ G91`;
 
 export const convertGCodeToPlasma = (code: string): string => {
   // remove first 10 lines
-  code = code.split('\n').slice(9).join('\n');
+  code = code.split('\n').slice(10).join('\n');
 
   //Deletes M8's, deletes F0's, changes M03 S255 to M07, M05 to M08
   code = code.replaceAll(M03_s, M03_r);
