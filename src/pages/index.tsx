@@ -276,19 +276,20 @@ const Home: NextPage = () => {
                           href={file.uri}
                           download={`plasma_${file.file.name}`}
                           className={clsx(
-                            'inline-flex items-center rounded-sm px-3 py-2 text-sm font-medium leading-4 text-slate-800',
+                            'inline-flex items-center rounded-sm px-3 py-2 text-sm font-medium leading-4 text-slate',
+                            'border border-transparent bg-gradient-to-br from-red-500/50 to-purple-400/50 shadow-sm hover:from-red-600/50 hover:to-purple-500/50',
                             'border border-transparent bg-slate-200',
                             'focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2'
                           )}
                         >
-                          {file.file.name}
+                          plasma_{file.file.name}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="w-4 h-4 ml-1"
                             viewBox="0 0 24 24"
                           >
