@@ -1,4 +1,5 @@
 import {BlobWriter, TextReader, ZipWriter} from '@zip.js/zip.js';
+import { FileWrapper } from './pages';
 
 const startGCode: string[] = ['G20', 'G91', 'M62'];
 
@@ -28,15 +29,21 @@ export const convertGCodeToPlasma = (code: string): string => {
   return code;
 };
 
-export const convertAndZip = async (files: File[]): Promise<string> => {
+export const convertAndZip = async (files: FileWrapper[]): Promise<string> => {
   const zipWriter = new ZipWriter(new BlobWriter());
   for (const file of files) {
-    const text = await file.text();
+    const text = await file.file.text();
     const code = convertGCodeToPlasma(text);
     const reader = new TextReader(code);
-    zipWriter.add(`plasma_${file.name}`, reader);
+    zipWriter.add(`plasma_${file.file.name}`, reader);
   }
   const blob = await zipWriter.close();
   const uri = URL.createObjectURL(blob);
   return uri;
+};
+
+export const createDownloadUri = (code: string): string => {
+  const blob = new Blob([code]);
+  const downloadUri = URL.createObjectURL(blob);
+  return downloadUri;
 };
