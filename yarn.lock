@@ -357,6 +357,11 @@
     "@typescript-eslint/types" "5.36.2"
     eslint-visitor-keys "^3.3.0"
 
+"@zip.js/zip.js@^2.6.62":
+  version "2.6.62"
+  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.6.62.tgz#f4a6adad7099c7d92b0577e7bcefaacca42679fc"
+  integrity sha512-wpMgpdtGuWLAmJIcbEv2L5kAqV8JP8ICrLbmxGNERNerVkkVe4+pTzf8TkhU8HxnYfsXqWTBI1wzD409LhdVYw==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -577,6 +582,11 @@ chokidar@^3.5.3:
     readdirp "~3.6.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+clsx@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 color-convert@^2.0.1:
   version "2.0.1"
