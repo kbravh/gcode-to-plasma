@@ -1,7 +1,7 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {clsx} from 'clsx';
-import {useState} from 'react';
+import {SyntheticEvent, useState} from 'react';
 import {convertAndZip} from '../convertGCode';
 import {AnimatePresence, motion} from 'framer-motion';
 
@@ -233,10 +233,41 @@ const Home: NextPage = () => {
                   </motion.div>
                   <motion.div className="flex flex-col items-center">
                     <h3 className="text-3xl mb-3">Download all files</h3>
-                    <motion.div className='mb-4'
+                    <motion.div
+                      className="mb-4 flex flex-col gap-3"
                       initial={{opacity: 0, y: 30}}
                       animate={{opacity: 1, y: 0}}
                     >
+                      <motion.button
+                        className={clsx(
+                          'inline-flex items-center rounded-md px-3 py-2 text-sm font-medium leading-4 text-white',
+                          'border border-transparent bg-gradient-to-br from-red-500 to-purple-400 shadow-sm hover:from-red-600 hover:to-purple-500',
+                          'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                        )}
+                        onClick={(e: SyntheticEvent) => {
+                          e.preventDefault();
+                          (files ?? []).forEach((_, i) => {
+                            const button = document.querySelector(
+                              `#file-${i}`
+                            ) as HTMLAnchorElement;
+                            button?.click();
+                          });
+                        }}
+                      >
+                        Save individual files
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="w-6 h-6 ml-1"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 19v2m0-8v2m8 4v2m0-8v2m-4 6v2m0-8v2m8-.42A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+                        </svg>
+                      </motion.button>
                       <motion.a
                         initial={{opacity: 0, y: 30}}
                         animate={{opacity: 1, y: 0}}
@@ -244,7 +275,7 @@ const Home: NextPage = () => {
                         type="button"
                         download={`plasma_files_${new Date().getTime()}.zip`}
                         className={clsx(
-                          'inline-flex items-center rounded-md px-3 py-2 text-sm font-medium leading-4 text-white',
+                          'inline-flex items-center rounded-md px-3 py-2 text-sm justify-center font-medium leading-4 text-white',
                           'border border-transparent bg-gradient-to-br from-red-500 to-purple-400 shadow-sm hover:from-red-600 hover:to-purple-500',
                           'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                         )}
@@ -271,6 +302,7 @@ const Home: NextPage = () => {
                       {files?.map((file, i) => (
                         <motion.a
                           key={`file-${i}`}
+                          id={`file-${i}`}
                           initial={{opacity: 0, y: 30}}
                           animate={{opacity: 1, y: 0}}
                           href={file.uri}
