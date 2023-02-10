@@ -29,12 +29,24 @@ export const convertGCodeToPlasma = (code: string): string => {
   return code;
 };
 
+
+export const convertGcodeFileToPlasmaFile = async (file: FileWrapper): Promise<FileWrapper> => {
+  const text = await file.file.text()
+  const code = convertGCodeToPlasma(text)
+  return {
+    ...file,
+    text: code,
+    uri: createDownloadUri(code)
+  }
+}
+
 export const convertAndZip = async (files: FileWrapper[]): Promise<string> => {
   const zipWriter = new ZipWriter(new BlobWriter());
   for (const file of files) {
-    const text = await file.file.text();
-    const code = convertGCodeToPlasma(text);
-    const reader = new TextReader(code);
+    if (!file.text) {
+      throw new Error('File does not have converted code')
+    }
+    const reader = new TextReader(file.text);
     zipWriter.add(`plasma_${file.file.name}`, reader);
   }
   const blob = await zipWriter.close();

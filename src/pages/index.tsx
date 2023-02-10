@@ -2,7 +2,7 @@ import type {NextPage} from 'next';
 import Head from 'next/head';
 import {clsx} from 'clsx';
 import {SyntheticEvent, useState} from 'react';
-import {convertAndZip} from '../convertGCode';
+import {convertAndZip, convertGcodeFileToPlasmaFile} from '../convertGCode';
 import {AnimatePresence, motion} from 'framer-motion';
 
 enum AppStates {
@@ -16,7 +16,8 @@ type AppState = keyof typeof AppStates;
 
 export type FileWrapper = {
   file: File;
-  uri: string;
+  text?: string;
+  uri?: string;
 };
 
 const Home: NextPage = () => {
@@ -29,7 +30,9 @@ const Home: NextPage = () => {
       return;
     }
     setState('converting');
-    const uri = await convertAndZip(files);
+    const convertedFiles = await Promise.all(files.map(file => convertGcodeFileToPlasmaFile(file)))
+    setFiles(convertedFiles)
+    const uri = await convertAndZip(convertedFiles);
     setUri(uri);
     setState('converted');
   };
@@ -66,9 +69,9 @@ const Home: NextPage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="w-4 h-4"
                   viewBox="0 0 24 24"
                 >
